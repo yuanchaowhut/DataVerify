@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>数据校验插件</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link rel="stylesheet" href="lib/bootstrap.min.css">
+    <script src="lib/jquery-2.2.4.js"></script>
+    <script src="lib/dataVerify.js"></script>
+
+    <script>
+        $(function () {
+            //dataVerify里的核心功能就是给表单的所有input元素绑定事件.
+            $("form").dataVerify();
+
+            //用户自定义的校验规则会合并到默认的RULES中。
+            jQuery.prototype.dataVerify.extendVerify({
+                //表示只接受qq邮箱
+                "qq-mail": function (data) {
+                    return data ? this.val().indexOf("@qq.com") > 0 : true;
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+<div class="container">
+    <form>
+        <div class="form-group">
+            <label for="email">邮箱</label>
+            <input id="email" type="email" class="form-control" placeholder="请输入邮箱"
+                   data-dv-reg="^\w+@\w+\.\w+$"
+                   data-dv-reg-message="请输入正确的邮箱!"
+                   data-dv-required=true
+                   data-dv-required-message="邮箱不能为空!"
+                   data-dv-qq-mail=true
+                   data-dv-qq-mail-message="请使用QQ邮箱注册!">
+        </div>
+        <div class="form-group">
+            <label for="mobile">手机</label>
+            <input id="mobile" type="tel" class="form-control" placeholder="请输入手机号码"
+                   data-dv-reg="^1[34578]\d{9}$"
+                   data-dv-reg-message="请输入正确的手机号码!"
+                   data-dv-required=true
+                   data-dv-required-message="手机号码不能为空!">
+        </div>
+        <div class="form-group">
+            <label for="password">密码</label>
+            <input id="password" type="password" class="form-control" placeholder="请输入密码"
+                   data-dv-reg="^\w+$"
+                   data-dv-reg-message="请输入正确的密码(6-16字母数字下划线)!"
+                   data-dv-required=true
+                   data-dv-required-message="密码不能为空!"
+                   data-dv-min-length="6"
+                   data-dv-min-length-message="密码不能少于6位!"
+                   data-dv-max-length="16"
+                   data-dv-max-length-message="密码不能大于16位!">
+        </div>
+        <div class="form-group">
+            <label for="confirm">确认密码</label>
+            <input id="confirm" type="password" class="form-control" placeholder="请确认密码"
+                   data-dv-confirm=true
+                   data-dv-confirm-message="两次输入密码不一致!"
+                   data-dv-required=true
+                   data-dv-required-message="请确认密码!">
+        </div>
+        <div class="form-group">
+            <label for="phone">座机</label>
+            <input id="phone" type="text" class="form-control" placeholder="请输入座机号码"
+                   data-dv-reg="^0\d{2,3}-\d{7,8}$"
+                   data-dv-reg-message="请输入正确的座机号码!"
+                   data-dv-required=true
+                   data-dv-required-message="座机号码不能为空!">
+        </div>
+
+        <button type="submit" class="btn btn-default">注册</button>
+    </form>
+</div>
+</body>
+</html>
