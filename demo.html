@@ -12,7 +12,9 @@
     <script>
         $(function () {
             //dataVerify里的核心功能就是给表单的所有input元素绑定事件.
-            $("form").dataVerify();
+            $("form").dataVerify({
+              initEvent:"blur"
+            });
 
             //用户自定义的校验规则会合并到默认的RULES中。
             jQuery.prototype.dataVerify.extendVerify({
